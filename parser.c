@@ -5,7 +5,7 @@ typedef struct {
   int num_args;
 } Command;
 
-typedef struct {
+typedef struct ParsedCmd {
   Command *commands;
   int num_commands;
 
