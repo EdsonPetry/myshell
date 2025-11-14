@@ -1,10 +1,10 @@
 CC = gcc
 CFLAGS = -g -Wall -Wvla -std=c99 -fsanitize=address,undefined
 DEBUG_OBJS = my_shell_debug.o
-REGULAR_OBJS = my_shell_.o
+REGULAR_OBJS = my_shell.o parser.o
 
 regular: $(REGULAR_OBJS)
-	$(CC) $(CFLAGS) $^ mysh
+	$(CC) $(CFLAGS) $^ -o mysh
 
 debug: $(DEBUG_OBJS)
 	$(CC) $(CFLAGS) $^ -o mysh_debug
