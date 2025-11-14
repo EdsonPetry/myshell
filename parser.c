@@ -15,3 +15,11 @@ typedef struct ParsedCmd {
   int is_and;
   int is_or;
 } ParsedCmd;
+
+ParsedCmd *parse(const char *line) {
+  // TODO: implement
+}
+
+void free_parsed_cmd(ParsedCmd *cmd) {
+  // TODO: implement
+}
