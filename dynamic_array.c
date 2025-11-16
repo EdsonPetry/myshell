@@ -1,4 +1,5 @@
 #include "dynamic_array.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 // dynamic array implementation based on code from
@@ -29,4 +30,10 @@ void freeArray(Array *a) {
   free(a->array);
   a->array = NULL;
   a->used = a->size = 0;
+}
+
+void printArray(Array *a) {
+  for (size_t i = 0; i < a->used; i++) {
+    printf("%s\n", a->array[i]);
+  }
 }
