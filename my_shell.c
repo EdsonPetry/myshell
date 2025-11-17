@@ -1,4 +1,5 @@
 #include "parser.h"
+#include "executer.h"
 #include <fcntl.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -38,8 +39,7 @@ int main(int argc, char *argv[]) {
     }
 
     // read input
-    ssize_t bytes_read =
-        read(input_fd, buffer + buffer_len, BUFFER_SIZE - buffer_len);
+    ssize_t bytes_read = read(input_fd, buffer + buffer_len, BUFFER_SIZE - buffer_len);
 
     if (bytes_read == 0) {
       // EOF
@@ -70,8 +70,9 @@ int main(int argc, char *argv[]) {
       printf("Got command: [%s]\n", cmd_line);
 
       // TODO: implement
-      /* ParsedCmd *cmd = parse(cmd_line); */
+      ParsedCmd *cmd = parse(cmd_line);
 
+      execute(cmd, is_interactive, input_fd);
       // TODO: implement
       // execute cmd here
 
