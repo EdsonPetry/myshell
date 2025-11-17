@@ -5,20 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct {
-  char **args;
-  int num_args;
-} Command;
-
-typedef struct ParsedCmd {
-  Command *commands;
-  int num_commands;
-  char *input_file;
-  char *output_file;
-  int is_and;
-  int is_or;
-} ParsedCmd;
-
 // helper to check if a command has the expected arguments
 int verify_command_args(Command *cmd, int expected_num_args,
                         char **expected_args) {

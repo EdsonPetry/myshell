@@ -6,22 +6,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct {
-  char **args;
-  int num_args;
-} Command;
-
-typedef struct ParsedCmd {
-  Command *commands;
-  int num_commands;
-
-  char *input_file;
-  char *output_file;
-
-  int is_and;
-  int is_or;
-} ParsedCmd;
-
 // tokenize returns a dynamic array of tokens from a string input
 // tokens are substrings separated by whitespace
 Array tokenize(const char *input) {
