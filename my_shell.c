@@ -1,4 +1,5 @@
 #include "parser.h"
+#include "executor.h"
 #include <fcntl.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -38,8 +39,7 @@ int main(int argc, char *argv[]) {
     }
 
     // read input
-    ssize_t bytes_read =
-        read(input_fd, buffer + buffer_len, BUFFER_SIZE - buffer_len);
+    ssize_t bytes_read = read(input_fd, buffer + buffer_len, BUFFER_SIZE - buffer_len);
 
     if (bytes_read == 0) {
       // EOF
@@ -67,23 +67,30 @@ int main(int argc, char *argv[]) {
       cmd_line[line_len] = '\0';
 
       // Place holder for parse/execute
-      printf("Got command: [%s]\n", cmd_line);
+      //printf("Got command: [%s]\n", cmd_line);
 
       // TODO: implement
-      /* ParsedCmd *cmd = parse(cmd_line); */
+      ParsedCmd *cmd = parse(cmd_line);
 
+      int should_exit = 0;
+      int finalState = execute(cmd, 0, is_interactive, &should_exit);
       // TODO: implement
       // execute cmd here
 
       // TODO: implement
       /* free_parsed_cmd(cmd); */
 
+      free_parsed_cmd(cmd);
       // check for exit/die
 
       // shift buffer
       int remaining = buffer_len - (line_len + 1);
       memmove(buffer, newline_pos + 1, remaining);
       buffer_len = remaining;
+
+      if (should_exit) {
+        exit(finalState);
+      }
     }
 
     if (buffer_len >= BUFFER_SIZE) {
