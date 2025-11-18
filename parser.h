@@ -19,4 +19,5 @@ typedef struct ParsedCmd {
 
 ParsedCmd *parse(const char *line);
 void free_parsed_cmd(ParsedCmd *cmd);
+
 #endif
