@@ -1,5 +1,6 @@
 #define _POSIX_C_SOURCE 200809L
 #include "parser.h"
+#include "executor.h"
 #include <fcntl.h>
 #include <stdarg.h>
 #include <stdio.h>
@@ -10,7 +11,7 @@
 #include <unistd.h>
 
 // REPLACE
-int execute(ParsedCmd *cmd, int prev_status, int is_interactive,
+/*int execute(ParsedCmd *cmd, int prev_status, int is_interactive,
             int *should_exit) {
   (void)cmd;
   (void)prev_status;
@@ -19,7 +20,7 @@ int execute(ParsedCmd *cmd, int prev_status, int is_interactive,
 
   // just return failure
   return 99;
-}
+}*/
 
 // assertion macros
 
