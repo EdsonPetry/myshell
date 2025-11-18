@@ -72,14 +72,21 @@ int main(int argc, char *argv[]) {
       // TODO: implement
       ParsedCmd *cmd = parse(cmd_line);
 
-      execute(cmd, is_interactive, input_fd);
+      int finalState = execute(cmd, 0, is_interactive, input_fd);
       // TODO: implement
       // execute cmd here
 
       // TODO: implement
       /* free_parsed_cmd(cmd); */
 
+      free_parsed_cmd(cmd);
       // check for exit/die
+
+      if (finalState == 2) {
+        return EXIT_SUCCESS;
+      } else if (finalState == 3) {
+        return EXIT_FAILURE;
+      }
 
       // shift buffer
       int remaining = buffer_len - (line_len + 1);
