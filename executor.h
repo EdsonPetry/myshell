@@ -1,1 +1,1 @@
-int execute(ParsedCmd *, int, int, int);
+int execute(ParsedCmd *, int, int, int*);

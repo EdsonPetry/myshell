@@ -67,12 +67,13 @@ int main(int argc, char *argv[]) {
       cmd_line[line_len] = '\0';
 
       // Place holder for parse/execute
-      printf("Got command: [%s]\n", cmd_line);
+      //printf("Got command: [%s]\n", cmd_line);
 
       // TODO: implement
       ParsedCmd *cmd = parse(cmd_line);
 
-      int finalState = execute(cmd, 0, is_interactive, input_fd);
+      int should_exit = 0;
+      int finalState = execute(cmd, 0, is_interactive, &should_exit);
       // TODO: implement
       // execute cmd here
 
@@ -82,16 +83,14 @@ int main(int argc, char *argv[]) {
       free_parsed_cmd(cmd);
       // check for exit/die
 
-      if (finalState == 2) {
-        return EXIT_SUCCESS;
-      } else if (finalState == 3) {
-        return EXIT_FAILURE;
-      }
-
       // shift buffer
       int remaining = buffer_len - (line_len + 1);
       memmove(buffer, newline_pos + 1, remaining);
       buffer_len = remaining;
+
+      if (should_exit) {
+        exit(finalState);
+      }
     }
 
     if (buffer_len >= BUFFER_SIZE) {

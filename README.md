@@ -3,6 +3,38 @@
 A shell implementation with support for command parsing, pipelines, I/O
 redirection, and conditional execution.
 
+## Executer
+
+The Executer will execute commands passed by the parser
+
+[functions](#functions)
+
+### Functions
+
+There are a few helper functions in the executer, but the most notable functions are:
+
+#### findFunction:
+
+findfunction will search the given directories of "/usr/local/bin", "/usr/bin", and "/bin" for the given command and return the directory where the command is. if it is not found, return NULL,
+
+#### cd, pwd, which:
+
+replicates the builtin functions with these functions.
+
+#### execute
+
+Execute is the big one. It will combine all the previous functions and check the conditions for each of them. It does this as described here:
+
+First, executor will check that the command can/should run (it shouldn't in case it is asked to run "true or command" because regardless of the command, the statement will be true and it has to make sure the command is not empty)
+
+after that, we will do as follows:
+
+If only one command is given (no piped commands), the executer will check what the type of the command is (if it's built in, it will get a number from 1-5, if not, it will be assigned 0), and then run it if the conditions are correct. In this case, if the command is not builtin, it will fork the process and run the program as a child, and then the parent can take care of the results.
+
+If multiple commands, the program will be forked, the child will be forked,and once it runs the command, the returned result will be handled by the parent, where the result will be supplied to the next command as input.
+
+then the final result is returned, and if exit or die were called, should_exit would be set to 1, where it will stop the my_shell.c program.
+
 ## Parser
 
 The parser module (`parser.c`, `parser.h`) tokenizes and parses shell
