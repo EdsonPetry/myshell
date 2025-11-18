@@ -89,6 +89,7 @@ int main(int argc, char *argv[]) {
       buffer_len = remaining;
 
       if (should_exit) {
+        printf("Exiting mysh...\n");
         exit(finalState);
       }
     }

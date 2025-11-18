@@ -12,6 +12,16 @@ char *BUILTIN[] = {"cd", "pwd", "which", "exit", "die"};
 
 //finds if a file exists 
 char *findFunction(char *function) {
+  if (strchr(function, '/') != NULL) {
+    if (access(function, X_OK) == 0) {
+      char *result = malloc(strlen(function) + 1);
+      if (result == NULL) {
+        return NULL;
+      }
+      strcpy(result, function);
+      return result;
+    }
+  }
   char buffer[BUFFER_SIZE];
   char *directories[] = {"/usr/local/bin", "/usr/bin", "/bin"};
   for (int i = 0; i < 3; i++) {
@@ -32,6 +42,7 @@ char *findFunction(char *function) {
 
 int cd(char *destination) { 
   if (chdir(destination) != 0) {
+    perror("chdir failed");
     return EXIT_FAILURE;
   }
   return EXIT_SUCCESS;
@@ -174,6 +185,10 @@ int execute(ParsedCmd *parsed_command, int prevState, int is_interactive, int *s
 
     case 4:
       //exit doesn't care, exit is god, it succeeds :)
+      if (commands_list[0].num_args != 1) {
+        printf("exit takes no arguments\n");
+        return EXIT_FAILURE;
+      }
       *should_exit = 1;
       return EXIT_SUCCESS;
       break;
@@ -341,9 +356,6 @@ int execute(ParsedCmd *parsed_command, int prevState, int is_interactive, int *s
   if (output_fd != STDOUT_FILENO) {
     close(output_fd);
   }
-  if (last_status == 0) {
-    return EXIT_SUCCESS;
-  }
-  return EXIT_FAILURE;
+  return EXIT_SUCCESS;
 }
 
