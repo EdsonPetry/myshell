@@ -41,10 +41,10 @@ assert_equal() {
 
   TOTAL=$((TOTAL + 1))
   if [ "$expected" = "$actual" ]; then
-    echo -e "${GREEN}✓ PASS${NC}: $name"
+    echo -e "${GREEN}PASS${NC}: $name"
     PASS=$((PASS + 1))
   else
-    echo -e "${RED}✗ FAIL${NC}: $name"
+    echo -e "${RED}FAIL${NC}: $name"
     echo "  Expected: '$expected'"
     echo "  Got:      '$actual'"
     FAIL=$((FAIL + 1))
@@ -57,10 +57,10 @@ assert_file_exists() {
 
   TOTAL=$((TOTAL + 1))
   if [ -f "$file" ]; then
-    echo -e "${GREEN}✓ PASS${NC}: $name"
+    echo -e "${GREEN}PASS${NC}: $name"
     PASS=$((PASS + 1))
   else
-    echo -e "${RED}✗ FAIL${NC}: $name (file '$file' not found)"
+    echo -e "${RED}FAIL${NC}: $name (file '$file' not found)"
     FAIL=$((FAIL + 1))
   fi
 }
@@ -72,10 +72,10 @@ assert_file_contains() {
 
   TOTAL=$((TOTAL + 1))
   if [ -f "$file" ] && grep -q "$expected" "$file"; then
-    echo -e "${GREEN}✓ PASS${NC}: $name"
+    echo -e "${GREEN}PASS${NC}: $name"
     PASS=$((PASS + 1))
   else
-    echo -e "${RED}✗ FAIL${NC}: $name"
+    echo -e "${RED}FAIL${NC}: $name"
     if [ -f "$file" ]; then
       echo "  File contents: $(cat "$file")"
     else
@@ -123,20 +123,20 @@ test_builtin_which() {
   echo "which ls" | $MYSH >output.txt 2>&1
   TOTAL=$((TOTAL + 1))
   if grep -q "/ls" output.txt; then
-    echo -e "${GREEN}✓ PASS${NC}: which ls"
+    echo -e "${GREEN}PASS${NC}: which ls"
     PASS=$((PASS + 1))
   else
-    echo -e "${RED}✗ FAIL${NC}: which ls (expected path containing /ls)"
+    echo -e "${RED}FAIL${NC}: which ls (expected path containing /ls)"
     FAIL=$((FAIL + 1))
   fi
 
   echo "which cat" | $MYSH >output.txt 2>&1
   TOTAL=$((TOTAL + 1))
   if grep -q "/cat" output.txt; then
-    echo -e "${GREEN}✓ PASS${NC}: which cat"
+    echo -e "${GREEN}PASS${NC}: which cat"
     PASS=$((PASS + 1))
   else
-    echo -e "${RED}✗ FAIL${NC}: which cat (expected path containing /cat)"
+    echo -e "${RED}FAIL${NC}: which cat (expected path containing /cat)"
     FAIL=$((FAIL + 1))
   fi
 
@@ -146,10 +146,10 @@ test_builtin_which() {
 
   TOTAL=$((TOTAL + 1))
   if [ -z "$content" ]; then
-    echo -e "${GREEN}✓ PASS${NC}: which with non-existent command (empty output)"
+    echo -e "${GREEN}PASS${NC}: which with non-existent command (empty output)"
     PASS=$((PASS + 1))
   else
-    echo -e "${RED}✗ FAIL${NC}: which with non-existent command should produce no output"
+    echo -e "${RED}FAIL${NC}: which with non-existent command should produce no output"
     FAIL=$((FAIL + 1))
   fi
 }
@@ -166,10 +166,10 @@ test_comments() {
   assert_file_contains "inline comment" "output.txt" "hello"
   TOTAL=$((TOTAL + 1))
   if ! grep -q "comment" output.txt; then
-    echo -e "${GREEN}✓ PASS${NC}: comment text not in output"
+    echo -e "${GREEN}PASS${NC}: comment text not in output"
     PASS=$((PASS + 1))
   else
-    echo -e "${RED}✗ FAIL${NC}: comment text should not appear in output"
+    echo -e "${RED}FAIL${NC}: comment text should not appear in output"
     FAIL=$((FAIL + 1))
   fi
 }
@@ -197,10 +197,10 @@ test_output_redirection() {
   assert_file_contains "output redirection truncates" "output.txt" "new content"
   TOTAL=$((TOTAL + 1))
   if ! grep -q "existing" output.txt; then
-    echo -e "${GREEN}✓ PASS${NC}: old content was truncated"
+    echo -e "${GREEN}PASS${NC}: old content was truncated"
     PASS=$((PASS + 1))
   else
-    echo -e "${RED}✗ FAIL${NC}: old content should be truncated"
+    echo -e "${RED}FAIL${NC}: old content should be truncated"
     FAIL=$((FAIL + 1))
   fi
 }
@@ -244,10 +244,10 @@ EOF
   $MYSH script.sh >output.txt 2>&1
   TOTAL=$((TOTAL + 1))
   if ! grep -q "should_not_appear" output.txt; then
-    echo -e "${GREEN}✓ PASS${NC}: and after false (command skipped)"
+    echo -e "${GREEN}PASS${NC}: and after false (command skipped)"
     PASS=$((PASS + 1))
   else
-    echo -e "${RED}✗ FAIL${NC}: and should skip after false"
+    echo -e "${RED}FAIL${NC}: and should skip after false"
     FAIL=$((FAIL + 1))
   fi
 }
@@ -269,10 +269,10 @@ EOF
   $MYSH script.sh >output.txt 2>&1
   TOTAL=$((TOTAL + 1))
   if ! grep -q "should_not_appear" output.txt; then
-    echo -e "${GREEN}✓ PASS${NC}: or after true (command skipped)"
+    echo -e "${GREEN}PASS${NC}: or after true (command skipped)"
     PASS=$((PASS + 1))
   else
-    echo -e "${RED}✗ FAIL${NC}: or should skip after true"
+    echo -e "${RED}FAIL${NC}: or should skip after true"
     FAIL=$((FAIL + 1))
   fi
 }
@@ -290,10 +290,10 @@ EOF
 
   TOTAL=$((TOTAL + 1))
   if ! grep -q "mysh>" output.txt; then
-    echo -e "${GREEN}✓ PASS${NC}: batch mode has no prompts"
+    echo -e "${GREEN}PASS${NC}: batch mode has no prompts"
     PASS=$((PASS + 1))
   else
-    echo -e "${RED}✗ FAIL${NC}: batch mode should not show prompts"
+    echo -e "${RED}FAIL${NC}: batch mode should not show prompts"
     FAIL=$((FAIL + 1))
   fi
 
@@ -316,10 +316,10 @@ EOF
 
   TOTAL=$((TOTAL + 1))
   if ! grep -q "after exit" output.txt; then
-    echo -e "${GREEN}✓ PASS${NC}: exit stops execution"
+    echo -e "${GREEN}PASS${NC}: exit stops execution"
     PASS=$((PASS + 1))
   else
-    echo -e "${RED}✗ FAIL${NC}: commands after exit should not execute"
+    echo -e "${RED}FAIL${NC}: commands after exit should not execute"
     FAIL=$((FAIL + 1))
   fi
 }
@@ -339,10 +339,10 @@ EOF
 
   TOTAL=$((TOTAL + 1))
   if ! grep -q "after die" output.txt; then
-    echo -e "${GREEN}✓ PASS${NC}: die stops execution"
+    echo -e "${GREEN}PASS${NC}: die stops execution"
     PASS=$((PASS + 1))
   else
-    echo -e "${RED}✗ FAIL${NC}: commands after die should not execute"
+    echo -e "${RED}FAIL${NC}: commands after die should not execute"
     FAIL=$((FAIL + 1))
   fi
 }
@@ -390,10 +390,10 @@ EOF
   assert_file_contains "conditional chain - third" "output.txt" "third"
   TOTAL=$((TOTAL + 1))
   if ! grep -q "second" output.txt; then
-    echo -e "${GREEN}✓ PASS${NC}: conditional chain - second skipped"
+    echo -e "${GREEN}PASS${NC}: conditional chain - second skipped"
     PASS=$((PASS + 1))
   else
-    echo -e "${RED}✗ FAIL${NC}: conditional chain - second should be skipped"
+    echo -e "${RED}FAIL${NC}: conditional chain - second should be skipped"
     FAIL=$((FAIL + 1))
   fi
 }
@@ -442,7 +442,6 @@ main() {
 
   cleanup
 
-  # Print summary
   echo ""
   echo "  Test Summary"
   echo "=========================================="

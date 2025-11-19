@@ -71,7 +71,6 @@ int which(char *function) {
   } else {
     char *path = findFunction(function);
     if (path == NULL){
-      printf("command not found\n");
       return EXIT_FAILURE;
     }
     printf("%s\n", path);
@@ -197,8 +196,10 @@ int execute(ParsedCmd *parsed_command, int prevState, int is_interactive, int *s
       //die will print all argument and fail, it is not god :(
       *should_exit = 1;
       for (int j = 1; j < commands_list[0].num_args; j++) {
-        printf("%s\n", commands_list[0].args[j]);
+        if (j > 1) printf(" ");
+        printf("%s", commands_list[0].args[j]);
       }
+      if (commands_list[0].num_args > 1) printf("\n");
       return EXIT_FAILURE;
       break;
     
@@ -328,9 +329,10 @@ int execute(ParsedCmd *parsed_command, int prevState, int is_interactive, int *s
           exit(EXIT_SUCCESS);
         case 5:
           for (int j = 1; j < commands_list[i].num_args; j++) {
-            printf("%s ", commands_list[i].args[j]);
+            if (j > 1) printf(" ");
+            printf("%s", commands_list[i].args[j]);
           }
-          printf("\n");
+          if (commands_list[i].num_args > 1) printf("\n");
           exit(EXIT_FAILURE);
         default:
           exit(EXIT_FAILURE);
@@ -356,6 +358,6 @@ int execute(ParsedCmd *parsed_command, int prevState, int is_interactive, int *s
   if (output_fd != STDOUT_FILENO) {
     close(output_fd);
   }
-  return EXIT_SUCCESS;
+  return last_status;
 }
 

@@ -27,6 +27,7 @@ int main(int argc, char *argv[]) {
   int is_interactive = isatty(input_fd);
   char buffer[BUFFER_SIZE];
   int buffer_len = 0;
+  int prev_state = 0;
 
   if (is_interactive) {
     printf("Welcome to mysh!\n");
@@ -73,7 +74,8 @@ int main(int argc, char *argv[]) {
       ParsedCmd *cmd = parse(cmd_line);
 
       int should_exit = 0;
-      int finalState = execute(cmd, 0, is_interactive, &should_exit);
+      int finalState = execute(cmd, prev_state, is_interactive, &should_exit);
+      prev_state = finalState;
       // TODO: implement
       // execute cmd here
 
